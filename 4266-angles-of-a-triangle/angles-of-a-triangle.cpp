@@ -27,7 +27,7 @@ public:
         double C = acos(cosC) * rad_to_deg;
 
         vector<double> ans = {A, B, C};
-        sort(ans.begin(), ans.end()); // Sorts the angles in ascending order
+        sort(ans.begin(), ans.end()); 
         
         return ans;
     }
