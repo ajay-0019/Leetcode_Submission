@@ -1,16 +1,18 @@
+#include<bits/stdc++.h>
 class NumArray {
 public:
-    vector<int> nums;
+    vector<int> prefix;
     NumArray(vector<int>& nums) {
-        this->nums=nums;
+        prefix.resize(nums.size()+1);
+        prefix[0]=0;
+        for(int i=0;i<nums.size();i++){
+            prefix[i+1]=prefix[i] + nums[i];
+        }
+
     }
     
     int sumRange(int left, int right) {
-        int ans=0;
-        for(int i=left;i<=right;i++){
-            ans+=nums[i];
-        }
-        return ans;
+        return prefix[right + 1] - prefix[left];
     }
 };
 
