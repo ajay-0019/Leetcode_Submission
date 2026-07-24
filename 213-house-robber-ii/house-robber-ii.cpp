@@ -1,28 +1,22 @@
 class Solution {
 public:
     int robthehouse(vector<int> &nums, int i){
-        int maxi=0;
-        int premaxi=0;
+        vector<int> dp(nums.size());
         if(i==0){
-            premaxi = nums[0];
-            maxi = max(nums[0], nums[1]);
+            dp[0]=nums[0];
+            dp[1]=max(nums[0],nums[1]);
             for(int i=2;i<nums.size()-1;i++){
-                int temp=maxi;
-                maxi=max(premaxi+nums[i],maxi);
-                premaxi=temp;
+                dp[i]=max(nums[i]+dp[i-2],dp[i-1]);
             }
-            return maxi;
+            return dp[nums.size() - 2];
         }else{
-            premaxi = nums[1];
-            maxi = max(nums[1], nums[2]);   
+            dp[1] = nums[1];
+            dp[2] = max(nums[1], nums[2]);
             for(int i=3;i<nums.size();i++){
-                int temp=maxi;
-                maxi=max(premaxi+nums[i],maxi);
-                premaxi=temp;
+                dp[i]=max(nums[i]+dp[i-2],dp[i-1]);
             }
         }
-        return maxi;
-        
+        return dp[nums.size()-1];
     }
     int rob(vector<int>& nums) {
         if(nums.size()==3 || nums.size()==1 || nums.size()==2){
