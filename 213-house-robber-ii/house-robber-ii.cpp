@@ -24,9 +24,6 @@ public:
         }
         int ans1=robthehouse(nums,0);
         int ans2=robthehouse(nums,1);
-        if(ans1>ans2){
-            return ans1;
-        }
-        return ans2;
+        return max(ans1,ans2);
     }
 };
