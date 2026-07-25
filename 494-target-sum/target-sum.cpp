@@ -9,9 +9,7 @@ public:
             return;
         }
         solve(idx+1,currentsum+nums[idx],target,ans,nums);
-        currentsum-nums[idx];
         solve(idx+1,currentsum-nums[idx],target,ans,nums);
-        currentsum+nums[idx];
     }
     int findTargetSumWays(vector<int>& nums, int target) {
         int ans=0;
