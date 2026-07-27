@@ -11,18 +11,19 @@
  */
 class Solution {
 public:
-
-    int sumOfLeftLeaves(TreeNode* root) {
+    void solve(TreeNode* root, int &ans){
         if(root==nullptr){
-            return 0;
+            return;
         }
-        int sum=0;
         if(root->left!=nullptr && root->left->left==nullptr && root->left->right==nullptr){
-            sum+=root->left->val;
-        }else{
-            sum+=sumOfLeftLeaves(root->left);
+            ans+=root->left->val;
         }
-        sum+=sumOfLeftLeaves(root->right);
-        return sum;
+        solve(root->left,ans);
+        solve(root->right,ans);
+    }
+    int sumOfLeftLeaves(TreeNode* root) {
+        int ans=0;
+        solve(root,ans);
+        return ans;
     }
 };
