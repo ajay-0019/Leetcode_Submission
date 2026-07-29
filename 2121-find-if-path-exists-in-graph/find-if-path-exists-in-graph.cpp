@@ -17,7 +17,7 @@ public:
         while(!q.empty()){
             int frontnode=q.front();
             q.pop();
-            for(int x:adj[frontnode]){
+            for(auto x:adj[frontnode]){
                 if(x==destination){
                     return true;
                 }
