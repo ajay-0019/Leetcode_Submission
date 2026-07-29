@@ -11,30 +11,21 @@
  */
 class Solution {
 public:
-    void solve2(int &nums, TreeNode*root){
-        if(root==nullptr){
-            return;
-        }
-        solve2(nums,root->left);
-        nums=nums-root->val;
-        root->val=nums+root->val;
-        solve2(nums,root->right);
-    }
     void solve(int &nums, TreeNode* root){
         if(root==nullptr){
             return;
         }
-        solve(nums,root->left);
-        nums+=root->val;
         solve(nums,root->right);
+        nums+=root->val;
+        root->val=nums;
+        solve(nums,root->left);
     }
     TreeNode* bstToGst(TreeNode* root) {
         if(root==nullptr){
             return root;
         }
         int nums=0;
-        solve(nums,root);;
-        solve2(nums,root);
+        solve(nums,root);
         return root;
     }
 };
