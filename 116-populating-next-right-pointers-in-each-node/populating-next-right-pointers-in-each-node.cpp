@@ -33,10 +33,7 @@ public:
                     q.push(nullptr);
                 }
             }else{
-                if(q.front()!=nullptr){
-                    Node* temp=q.front();
-                    node->next=temp;
-                }
+                node->next=q.front();
                 if(node->left){
                     q.push(node->left);
                 }
