@@ -4,22 +4,16 @@ public:
         vector<vector<int>> graph(n);
         for(int i=0;i<n;i++){
             if(manager[i]!=-1){
-                graph[i].push_back(manager[i]);
                 graph[manager[i]].push_back(i);
             }
         }
-        vector<int>  dp(n);
-        auto dfs=[&](auto &&self, vector<vector<int>> &graph,vector<int>& dp, vector<int>& informTime,int node,int parent)->int{
+        auto dfs=[&](auto &&self,vector<vector<int>>& graph,vector<int> &informTime,int node)->int{
+            int maxTime=0;
             for(int v:graph[node]){
-                if(v==parent){
-                    continue;
-                }
-                self(self,graph,dp,informTime,v,node);
-                dp[node]=max(dp[node],dp[v]+informTime[node]);
+                maxTime=max(maxTime,self(self,graph,informTime,v));
             }
-            return dp[node];
+            return maxTime+informTime[node];
         };
-        int ans=dfs(dfs,graph,dp,informTime,headID,-1);
-        return ans;
+        return dfs(dfs,graph,informTime,headID);
     }
 };
