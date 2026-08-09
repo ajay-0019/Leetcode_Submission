@@ -1,23 +1,28 @@
 class Solution {
 public:
+    const int INF=1e9;
     int coinChange(vector<int>& nums, int amount) {
-        int n = nums.size();
-        const int INF = 1e9 + 5;
-        sort(nums.begin(), nums.end());
-        vector<int> cache(amount+1, -1);
-        auto recurse = [&](auto&& self, int k)->int{
-            if(k==0)
+        if(amount==0){
+            return 0;
+        }
+        vector<int> dp(amount+1,-1);
+        auto solve=[&](auto && self, vector<int>& dp, int amount, vector<int>& nums)->int{
+            if(amount==0){
                 return 0;
-            if(cache[k]!=-1)
-                return cache[k];
-            int ans = INF;
-            for(int i: nums){
-                if(i>k) break;
-                ans = min(ans, 1 + self(self, k-i));
             }
-            return cache[k] = ans;
+            if(amount<0){
+                return INF;
+            }
+            if(dp[amount]!=-1){
+                return dp[amount];
+            }
+            int mini=INF;
+            for(int i=0;i<nums.size();i++){
+                mini=min(mini,self(self,dp,amount-nums[i],nums)+1);
+            }
+            return dp[amount]=mini;
         };
-        int ans = recurse(recurse, amount);
-        return (ans>=INF?-1:ans);
+        int ans=solve(solve,dp,amount,nums);
+        return (ans!=INF)?ans:-1;
     }
 };
