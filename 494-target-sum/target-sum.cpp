@@ -1,20 +1,19 @@
 class Solution {
 public:
-    void solve(int idx, int currentsum, int target, int &ans, vector<int> &nums) {
-        if (idx == nums.size()) {
-            if (currentsum == target)
-                ans++;
-            return;
-        }
-
-        solve(idx + 1, currentsum + nums[idx], target, ans, nums);
-        solve(idx + 1, currentsum - nums[idx], target, ans, nums);
-    }
     int findTargetSumWays(vector<int>& nums, int target) {
         int ans=0;
-        int idx=0;
-        int currentsum=0;
-        solve(idx,currentsum,target,ans,nums);
+        auto solve=[&](auto &&self,long long sum,int idx)->void{
+            if(idx==nums.size() && sum==target){
+                ans++;
+                return;
+            }
+            if(idx==nums.size()){
+                return;
+            }
+            self(self,sum+nums[idx],idx+1);
+            self(self,sum-nums[idx],idx+1);
+        };
+        solve(solve,0,0);
         return ans;
     }
 };
