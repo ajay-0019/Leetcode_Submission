@@ -1,36 +1,30 @@
 class Solution {
 public:
-    bool dfs(int node, vector<bool> &visited, vector<bool> &instack, vector<vector<int>> &adj){
-        visited[node]=true;
-        instack[node]=true;
-        for(auto n:adj[node]){
-            if(!visited[n]){
-                if(dfs(n,visited,instack,adj)){
-                    return true;
-                }
-            }else if(instack[n]){
-                return true;
-            }
-        }
-        instack[node]=false;
-        return false;
-    }
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<vector<int>> adj(numCourses);
-        for(auto i:prerequisites){
-            int u=i[0];
-            int v=i[1];
-            adj[u].push_back(v);
+        vector<vector<int>> graph(numCourses);
+        vector<int> indegree(numCourses,0);
+        for(auto course:prerequisites){
+            graph[course[1]].push_back(course[0]);
+            indegree[course[0]]++;
         }
-        vector<bool> visited(numCourses);
-        vector<bool> instack(numCourses);
+        queue<int> q;
         for(int i=0;i<numCourses;i++){
-            if(!visited[i]){
-                if(dfs(i,visited,instack,adj)){
-                    return false;
+            if(indegree[i]==0){
+                q.push(i);
+            }
+        }
+        int ans=0;
+        while(!q.empty()){
+            int front=q.front();
+            q.pop();
+            ans++;
+            for(auto neighbor:graph[front]){
+                indegree[neighbor]--;
+                if(indegree[neighbor]==0){
+                    q.push(neighbor);
                 }
             }
         }
-        return true;
+        return ans==numCourses;
     }
 };
