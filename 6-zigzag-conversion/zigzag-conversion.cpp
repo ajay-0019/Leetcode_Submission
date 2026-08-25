@@ -6,25 +6,10 @@ public:
         }
 
         int n = s.size();
-
-        int cycle = 2 * numRows - 2;
-
-        int fullCycles = n / cycle;
-        int rem = n % cycle;
-
-        int cols = fullCycles * (numRows - 1);
-
-        if (rem > 0) {
-            if (rem <= numRows) {
-                cols += 1;
-            } else {
-                cols += rem - numRows + 1;
-            }
-        }
-
+        int cols=1000;
         vector<vector<char>> str(numRows, vector<char>(cols, '\0'));
         int k = 0;
-        auto solve = [&](auto &&self, int i, int j) -> void {
+        auto solve = [&](auto&& self, int i, int j) -> void {
             if (i <= 0 || j >= cols || k >= n) {
                 return;
             }
