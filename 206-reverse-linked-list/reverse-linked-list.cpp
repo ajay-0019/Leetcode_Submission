@@ -18,7 +18,6 @@ public:
             current->next=prev;
             prev=current;
             current=temp;
-            head=current;
         }
         return prev;
     }
