@@ -11,31 +11,31 @@
  */
 class Solution {
 public:
-    int sum(TreeNode* root, int &node) {
-        if (root == nullptr) {
-            return 0;
-        }
-        node++;
-        return root->val + sum(root->left, node) + sum(root->right, node);
+    int res = 0; 
+    int findSum(TreeNode* root , int &count){
+        if( root == NULL) return 0 ; 
+
+        count ++ ;
+
+        int l = findSum( root -> left ,count ) ; 
+        int r = findSum( root -> right , count ) ; 
+
+        return l + r +root -> val ;
+
+
     }
-    void solve(TreeNode* root,int &ans){
-        if(root==nullptr){
-            return ;
-        }
-        int node=0;
-        int tsum=sum(root,node);
-        if(tsum/node==root->val){
-            ans++;
-        }
-        solve(root->left,ans);
-        solve(root->right,ans);
+    void solve(TreeNode* root){
+        if(root == NULL) return ;
+        int count = 0 ;
+        int sum = findSum( root , count);
+
+        if(root-> val == sum/count ) res++ ;
+
+        solve( root -> left);
+        solve( root-> right);
     }
     int averageOfSubtree(TreeNode* root) {
-        if(root==nullptr){
-            return 0;
-        }
-        int ans=0;
-        solve(root,ans);
-        return ans;
+        solve( root ) ; 
+        return res ; 
     }
 };
